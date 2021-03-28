@@ -8,6 +8,7 @@ import ThreadList from '@/components/ThreadList'
 import sourceData from '@/data.json'
 
 export default {
+  name: 'Home',
   components: {
     ThreadList
   },

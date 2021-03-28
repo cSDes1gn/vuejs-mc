@@ -32,6 +32,7 @@
 import sourceData from '@/data.json'
 
 export default {
+  name: 'ThreadList',
   props: {
     threads: {
       type: Array,
@@ -56,5 +57,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

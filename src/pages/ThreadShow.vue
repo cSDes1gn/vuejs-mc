@@ -1,32 +1,27 @@
 <template>
   <div class="col-large push-top">
     <h1>{{ thread.title }}</h1>
-    <div class="post-list">
-      <div class="post" v-for="postId in thread.posts" :key="postId">
-        <div class="user-info">
-          <a href="#" class="user-name">{{ userById(postById(postId).userId).name }}</a>
-          <a href="#">
-            <img class="avatar-large" :src="userById(postById(postId).userId).avatar" alt="">
-          </a>
-          <p class="desktop-only text-small">107 posts</p>
-        </div>
-        <div class="post-content">
-          <div>
-            <p>{{ postById(postId).text }}</p>
+    <post-list :posts="threadPosts"/>
+      <div class="col-full">
+        <form @submit.prevent="addPost">
+          <div class="form group">
+            <textarea v-model="newPostText" name="" id="" cols="30" rows="10" class="form-input"/>
           </div>
-        </div>
-      <div class="post-date text-faded">
-        {{ postById(postId).publishedAt }}
+          <div class="form-actions">
+            <button class="btn-blue">Submit post</button>
+          </div>
+        </form>
       </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import sourceData from '@/data.json'
+import PostList from '@/components/PostList.vue'
 
 export default {
+  name: 'ThreadShow',
+  components: { PostList },
   props: {
     id: {
       required: true,
@@ -37,20 +32,32 @@ export default {
     return {
       threads: sourceData.threads,
       posts: sourceData.posts,
-      users: sourceData.users
+      newPostText: ''
     }
   },
   computed: {
     thread () {
-      return this.threads.find(t => t.id === this.id) // equivalent to this.$route.params.id
+      // equivalent to this.$route.params.id
+      return this.threads.find(t => t.id === this.id)
+    },
+    threadPosts () {
+      // return all posts belonging to this thread id
+      return this.posts.filter(p => p.threadId === this.id)
     }
   },
   methods: {
-    postById (postId) {
-      return this.posts.find(p => p.id === postId)
-    },
-    userById (userId) {
-      return this.users.find(u => u.id === userId)
+    addPost () {
+      const postId = 'dnlns' + Math.random()
+      const payload = {
+        id: postId,
+        text: this.newPostText,
+        publishedAt: Math.floor(Date.now() / 1000),
+        threadId: this.id,
+        userId: '38St7Q8Zi2N1SPa5ahzssq9kbyp1'
+      }
+      this.posts.push(payload)
+      this.thread.posts.push(postId)
+      this.newPostText = ''
     }
   }
 }
