@@ -13,18 +13,20 @@
           <p>{{ post.text }}</p>
         </div>
       </div>
-    <div class="post-date text-faded">
-      {{ post.publishedAt }}
-    </div>
+      <div class="post-date text-faded">
+        <app-date :timestamp="post.publishedAt"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import AppDate from '@/components/AppDate'
 import sourceData from '@/data.json'
 
 export default ({
   name: 'PostList',
+  components: { AppDate },
   props: {
     posts: {
       type: Array,

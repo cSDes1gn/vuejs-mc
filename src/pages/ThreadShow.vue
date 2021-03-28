@@ -2,26 +2,18 @@
   <div class="col-large push-top">
     <h1>{{ thread.title }}</h1>
     <post-list :posts="threadPosts"/>
-      <div class="col-full">
-        <form @submit.prevent="addPost">
-          <div class="form group">
-            <textarea v-model="newPostText" name="" id="" cols="30" rows="10" class="form-input"/>
-          </div>
-          <div class="form-actions">
-            <button class="btn-blue">Submit post</button>
-          </div>
-        </form>
-      </div>
+    <post-editor @save="addPost"/>
   </div>
 </template>
 
 <script>
 import sourceData from '@/data.json'
 import PostList from '@/components/PostList.vue'
+import PostEditor from '@/components/PostEditor.vue'
 
 export default {
   name: 'ThreadShow',
-  components: { PostList },
+  components: { PostList, PostEditor },
   props: {
     id: {
       required: true,
@@ -46,17 +38,15 @@ export default {
     }
   },
   methods: {
-    addPost () {
-      const postId = 'dnlns' + Math.random()
-      const payload = {
-        id: postId,
-        text: this.newPostText,
-        publishedAt: Math.floor(Date.now() / 1000),
-        threadId: this.id,
-        userId: '38St7Q8Zi2N1SPa5ahzssq9kbyp1'
+    addPost (eventData) {
+      const post = {
+        ...eventData.post,
+        threadId: this.id
       }
-      this.posts.push(payload)
-      this.thread.posts.push(postId)
+      // access the post under eventData.post
+      // this.$emit('save-post', { post })
+      this.posts.push(post)
+      this.thread.posts.push(post.id)
       this.newPostText = ''
     }
   }
