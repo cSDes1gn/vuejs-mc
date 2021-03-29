@@ -21,12 +21,10 @@
 </template>
 
 <script>
-import AppDate from '@/components/AppDate'
 import sourceData from '@/data.json'
 
 export default ({
   name: 'PostList',
-  components: { AppDate },
   props: {
     posts: {
       type: Array,
