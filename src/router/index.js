@@ -3,8 +3,8 @@ import NotFound from '@/pages/NotFound'
 import ThreadShow from '@/pages/ThreadShow'
 import Forum from '@/pages/Forum'
 import Category from '@/pages/Category'
-import { createRouter, createWebHistory } from 'vue-router'
 import sourceData from '@/data.json'
+import { createRouter, createWebHistory } from 'vue-router'
 
 // define routes
 const routes = [

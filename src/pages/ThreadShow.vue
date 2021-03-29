@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import sourceData from '@/data.json'
 import PostList from '@/components/PostList.vue'
 import PostEditor from '@/components/PostEditor.vue'
 
@@ -20,14 +19,13 @@ export default {
       type: String
     }
   },
-  data () {
-    return {
-      threads: sourceData.threads,
-      posts: sourceData.posts,
-      newPostText: ''
-    }
-  },
   computed: {
+    threads () {
+      return this.$store.state.threads
+    },
+    posts () {
+      return this.$store.state.posts
+    },
     thread () {
       // equivalent to this.$route.params.id
       return this.threads.find(t => t.id === this.id)
