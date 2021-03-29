@@ -41,11 +41,7 @@ export default {
         ...eventData.post,
         threadId: this.id
       }
-      // access the post under eventData.post
-      // this.$emit('save-post', { post })
-      this.posts.push(post)
-      this.thread.posts.push(post.id)
-      this.newPostText = ''
+      this.$store.dispatch('createPost', post)
     }
   }
 }
